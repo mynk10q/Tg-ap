@@ -3,6 +3,7 @@ export default async function handler(req, res) {
 
     const { key, term } = req.query;
 
+    // API key check
     if (key !== "mynkx") {
       return res.status(403).json({
         status: false,
@@ -10,6 +11,7 @@ export default async function handler(req, res) {
       });
     }
 
+    // term check
     if (!term) {
       return res.status(400).json({
         status: false,
@@ -17,13 +19,15 @@ export default async function handler(req, res) {
       });
     }
 
+    // ✅ NEW API HERE
     const url = `https://www.zephrexdigital.site/api?key=ZEPH-OX98&type=TG_NUM&term=${term}`;
 
     const response = await fetch(url);
     const data = await response.json();
 
-    data.BUY_API = "@mynk_mynk_mynk";
-    data.SUPPORT = "@mynk_mynk_mynk";
+    // custom add
+    data.buy_api = "@mynk_mynk_mynk";
+    data.support = "@mynk_mynk_mynk";
 
     res.status(200).json(data);
 
