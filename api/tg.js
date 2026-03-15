@@ -19,13 +19,19 @@ export default async function handler(req, res) {
       });
     }
 
-    // ✅ NEW API HERE
+    // API call
     const url = `https://www.zephrexdigital.site/api?key=ZEPH-OX98&type=TG_NUM&term=${term}`;
 
     const response = await fetch(url);
     const data = await response.json();
 
-    // custom add
+    // ❌ remove zephrex fields
+    delete data.BUY_API;
+    delete data.SUPPORT;
+    delete data.buy_api;
+    delete data.support;
+
+    // ✅ add your name
     data.buy_api = "@mynk_mynk_mynk";
     data.support = "@mynk_mynk_mynk";
 
