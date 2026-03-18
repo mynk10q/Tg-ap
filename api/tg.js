@@ -30,10 +30,12 @@ export default async function handler(req, res) {
     delete data.SUPPORT;
     delete data.buy_api;
     delete data.support;
+    delete data._powered_by;   // ← ye missing tha
 
     // ✅ add your name
     data.buy_api = "@mynk_mynk_mynk";
     data.support = "@mynk_mynk_mynk";
+    data._powered_by = "mynk";   // ← powered by mynk
 
     res.status(200).json(data);
 
