@@ -3,7 +3,6 @@ export default async function handler(req, res) {
 
     const { key, term } = req.query;
 
-    // API key check
     if (key !== "mynkx") {
       return res.status(403).json({
         status: false,
@@ -11,7 +10,6 @@ export default async function handler(req, res) {
       });
     }
 
-    // term check
     if (!term) {
       return res.status(400).json({
         status: false,
@@ -19,11 +17,27 @@ export default async function handler(req, res) {
       });
     }
 
-    // ✅ Only backup API
     const url = `https://telegram-to-num-uu9k.vercel.app/sms?key=Mynk&term=${term}`;
 
     const response = await fetch(url);
     const data = await response.json();
+
+    // ✅ agar error aya to hide karo
+    const text = JSON.stringify(data).toLowerCase();
+
+    if (
+      text.includes("limit") ||
+      text.includes("admin") ||
+      text.includes("backend") ||
+      text.includes("error") ||
+      text.includes("contact") ||
+      text.includes("failed")
+    ) {
+      return res.status(200).json({
+        status: false,
+        message: "api down"
+      });
+    }
 
     // remove old fields
     delete data.BUY_API;
@@ -40,9 +54,12 @@ export default async function handler(req, res) {
     res.status(200).json(data);
 
   } catch (error) {
-    res.status(500).json({
+
+    // ✅ agar server error ho
+    res.status(200).json({
       status: false,
-      message: "Server Error"
+      message: "api down"
     });
+
   }
 }
