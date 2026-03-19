@@ -19,25 +19,11 @@ export default async function handler(req, res) {
       });
     }
 
-    let data;
+    // ✅ Only backup API
+    const url = `https://telegram-to-num-uu9k.vercel.app/sms?key=Mynk&term=${term}`;
 
-    // ✅ First API
-    try {
-
-      const url1 = `https://www.zephrexdigital.site/api?key=ZEPH-OX98&type=TG_NUM&term=${term}`;
-
-      const r1 = await fetch(url1);
-      data = await r1.json();
-
-    } catch (e) {
-
-      // ✅ Backup API (agar pehli fail ho)
-      const url2 = `https://telegram-to-num-uu9k.vercel.app/sms?key=Mynk&term=${term}`;
-
-      const r2 = await fetch(url2);
-      data = await r2.json();
-
-    }
+    const response = await fetch(url);
+    const data = await response.json();
 
     // remove old fields
     delete data.BUY_API;
