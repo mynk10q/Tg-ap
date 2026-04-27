@@ -22,7 +22,6 @@ export default async function handler(req, res) {
     const response = await fetch(url);
     const data = await response.json();
 
-    // ✅ safe check
     if (!data) {
       return res.status(200).json({
         status: false,
@@ -30,7 +29,10 @@ export default async function handler(req, res) {
       });
     }
 
-    // branding
+    // ❌ remove unwanted fields
+    delete data.developer;
+
+    // ✅ branding
     data.buy_api = "@mynk_mynk_mynk";
     data.support = "@mynk_mynk_mynk";
     data._powered_by = "mynk";
