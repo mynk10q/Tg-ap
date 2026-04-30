@@ -29,15 +29,18 @@ export default async function handler(req, res) {
       });
     }
 
-    // ❌ kuch change nahi karna structure me
-    delete data.developer;
+    // 🔥 MAIN FIX — yahi game changer hai
+    const finalData = {
+      attempt: data.result.attempt,
+      result: data.result.result, // nested se actual data nikala
+      success: data.result.success,
 
-    // ✅ sirf ye 3 add kar
-    data.buy_api = "@mynk_mynk_mynk";
-    data.support = "@mynk_mynk_mynk";
-    data._powered_by = "mynk";
+      buy_api: "@mynk_mynk_mynk",
+      support: "@mynk_mynk_mynk",
+      _powered_by: "mynk"
+    };
 
-    return res.status(200).json(data);
+    return res.status(200).json(finalData);
 
   } catch (e) {
     return res.status(200).json({
