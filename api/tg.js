@@ -29,24 +29,19 @@ export default async function handler(req, res) {
       });
     }
 
-    // ✅ extract like python style
-    const r = data.result;
+    // ❌ remove unwanted field
+    delete data.developer;
 
-    const formatted = {
-      status: true,
-      country: r.country || "N/A",
-      country_code: r.country_code || "N/A",
-      number: r.number || "N/A",
-      tg_id: r.tg_id || "N/A",
-      message: r.msg || "",
+    // ✅ keep same structure + add tags
+    const finalData = {
+      ...data, // pura original structure same rahega
 
-      // ✅ keep your tags (as you said)
       buy_api: "@mynk_mynk_mynk",
       support: "@mynk_mynk_mynk",
       _powered_by: "mynk"
     };
 
-    return res.status(200).json(formatted);
+    return res.status(200).json(finalData);
 
   } catch (error) {
     return res.status(200).json({
