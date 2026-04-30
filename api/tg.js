@@ -29,21 +29,17 @@ export default async function handler(req, res) {
       });
     }
 
-    // ❌ remove unwanted field
+    // ❌ kuch change nahi karna structure me
     delete data.developer;
 
-    // ✅ keep same structure + add tags
-    const finalData = {
-      ...data, // pura original structure same rahega
+    // ✅ sirf ye 3 add kar
+    data.buy_api = "@mynk_mynk_mynk";
+    data.support = "@mynk_mynk_mynk";
+    data._powered_by = "mynk";
 
-      buy_api: "@mynk_mynk_mynk",
-      support: "@mynk_mynk_mynk",
-      _powered_by: "mynk"
-    };
+    return res.status(200).json(data);
 
-    return res.status(200).json(finalData);
-
-  } catch (error) {
+  } catch (e) {
     return res.status(200).json({
       status: false,
       message: "api down"
