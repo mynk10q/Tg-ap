@@ -17,12 +17,13 @@ export default async function handler(req, res) {
       });
     }
 
-    const url = `https://tg-num-two.vercel.app/api/userid=${term}?key=sellapi`;
+    // ✅ Correct backend API
+    const url = `https://tg-num-two.vercel.app/sms?key=sellapi&userid=${term}`;
 
     const response = await fetch(url);
     const data = await response.json();
 
-    if (!data) {
+    if (!data || data.status === false) {
       return res.status(200).json({
         status: false,
         message: "api down"
