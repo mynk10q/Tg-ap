@@ -22,17 +22,16 @@ export default async function handler(req, res) {
     const response = await fetch(url);
     const data = await response.json();
 
-    // 🔥 BAS YE LINE GAME CHANGER
-    if (data?.data?.tag) {
-      delete data.data.tag;
-    }
+    // 🔥 SAB TAG REMOVE
+    if (data?.tag) delete data.tag;
+    if (data?.buy_api) delete data.buy_api;
+    if (data?.support) delete data.support;
+    if (data?._powered_by) delete data._powered_by;
 
-    return res.status(200).json({
-      ...data,
-      buy_api: "@mynk_mynk_mynk",
-      support: "@mynk_mynk_mynk",
-      _powered_by: "mynk"
-    });
+    // agar nested me ho
+    if (data?.data?.tag) delete data.data.tag;
+
+    return res.status(200).json(data);
 
   } catch (e) {
     return res.status(200).json({
