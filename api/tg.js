@@ -17,23 +17,23 @@ export default async function handler(req, res) {
       });
     }
 
-    const url = `https://tg-num-two.vercel.app/sms?key=sellapi&userid=${term}`;
+    // ✅ NEW API (jo tune diya)
+    const url = `https://users-xinfo-admin-six.vercel.app/api?key=mayankbhaiooo&type=uers&term=${term}`;
 
     const response = await fetch(url);
     const data = await response.json();
 
-    if (!data || !data.result) {
+    if (!data) {
       return res.status(200).json({
         status: false,
         message: "api down"
       });
     }
 
-    // 🔥 MAIN FIX — yahi game changer hai
+    // 🔥 Customize output (agar structure change ho to adjust kar lena)
     const finalData = {
-      attempt: data.result.attempt,
-      result: data.result.result, // nested se actual data nikala
-      success: data.result.success,
+      status: true,
+      data: data,
 
       buy_api: "@mynk_mynk_mynk",
       support: "@mynk_mynk_mynk",
