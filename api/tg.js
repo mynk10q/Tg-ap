@@ -17,25 +17,18 @@ export default async function handler(req, res) {
       });
     }
 
-    const url = `https://users-xinfo-admin-six.vercel.app/api?key=mayankbhaiooo&type=users&term=${term}`;
+    const url = `https://users-xinfo-admin-six.vercel.app/api?key=mayankbhaiooo&type=uers&term=${term}`;
 
     const response = await fetch(url);
     const data = await response.json();
 
-    const resultData = data.data?.result;
-
-    if (!resultData || Object.keys(resultData).length === 0) {
-      return res.status(200).json({
-        status: false,
-        message: "No data found"
-      });
+    // 🔥 BAS YE LINE GAME CHANGER
+    if (data?.data?.tag) {
+      delete data.data.tag;
     }
 
     return res.status(200).json({
-      status: true,
-      result: resultData,
-      success: data.data.success,
-
+      ...data,
       buy_api: "@mynk_mynk_mynk",
       support: "@mynk_mynk_mynk",
       _powered_by: "mynk"
