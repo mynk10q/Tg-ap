@@ -17,23 +17,23 @@ export default async function handler(req, res) {
       });
     }
 
-    // ✅ NEW API (jo tune diya)
     const url = `https://users-xinfo-admin-six.vercel.app/api?key=mayankbhaiooo&type=uers&term=${term}`;
 
     const response = await fetch(url);
     const data = await response.json();
 
-    if (!data) {
+    if (!data || !data.data) {
       return res.status(200).json({
         status: false,
         message: "api down"
       });
     }
 
-    // 🔥 Customize output (agar structure change ho to adjust kar lena)
+    // 🔥 tag remove + clean structure
     const finalData = {
       status: true,
-      data: data,
+      result: data.data.result,   // actual useful data
+      success: data.data.success,
 
       buy_api: "@mynk_mynk_mynk",
       support: "@mynk_mynk_mynk",
