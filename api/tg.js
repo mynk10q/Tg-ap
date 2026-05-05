@@ -22,18 +22,19 @@ export default async function handler(req, res) {
     const response = await fetch(url);
     const data = await response.json();
 
-    if (!data || !data.data) {
+    // 🔥 SAFE CHECK (better)
+    if (!data || data.status === false) {
       return res.status(200).json({
         status: false,
         message: "api down"
       });
     }
 
-    // 🔥 tag remove + clean structure
+    // 🔥 CLEAN OUTPUT
     const finalData = {
       status: true,
-      result: data.data.result,   // actual useful data
-      success: data.data.success,
+      result: data.data?.result || {},
+      success: data.data?.success || false,
 
       buy_api: "@mynk_mynk_mynk",
       support: "@mynk_mynk_mynk",
