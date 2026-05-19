@@ -3,6 +3,7 @@ export default async function handler(req, res) {
 
     const { key, term } = req.query;
 
+    // ✅ API KEY CHECK
     if (key !== "mynkx") {
       return res.status(403).json({
         status: false,
@@ -10,6 +11,7 @@ export default async function handler(req, res) {
       });
     }
 
+    // ✅ NUMBER CHECK
     if (!term) {
       return res.status(400).json({
         status: false,
@@ -23,24 +25,37 @@ export default async function handler(req, res) {
     const response = await fetch(url);
     const data = await response.json();
 
+    // ✅ LIMIT HANDLE
+    if (data?.error?.includes("Limit exceeded")) {
+      return res.status(200).json({
+        status: false,
+        message: "Server busy try later"
+      });
+    }
+
     // 🔥 REMOVE EXTRA TAGS
-    if (data?.tag) delete data.tag;
-    if (data?.buy_api) delete data.buy_api;
-    if (data?.support) delete data.support;
-    if (data?._powered_by) delete data._powered_by;
+    delete data.tag;
+    delete data.buy_api;
+    delete data.support;
+    delete data._powered_by;
 
-    // Nested remove
-    if (data?.data?.tag) delete data.data.tag;
-    if (data?.data?.buy_api) delete data.data.buy_api;
-    if (data?.data?.support) delete data.data.support;
-    if (data?.data?._powered_by) delete data.data._powered_by;
+    // 🔥 REMOVE NESTED TAGS
+    if (data?.data) {
+      delete data.data.tag;
+      delete data.data.buy_api;
+      delete data.data.support;
+      delete data.data._powered_by;
+    }
 
+    // ✅ FINAL RESPONSE
     return res.status(200).json(data);
 
   } catch (e) {
+
     return res.status(200).json({
       status: false,
-      message: "api down"
+      message: "API Down"
     });
+
   }
 }
