@@ -17,19 +17,23 @@ export default async function handler(req, res) {
       });
     }
 
-    const url = `https://users-xinfo-admin-six.vercel.app/api?key=mayankbhaiooo&type=uers&term=${term}`;
+    // ✅ NEW BACKEND
+    const url = `https://users-xinfo-admin-eight.vercel.app/api?key=lljeliye&type=uers&term=${term}`;
 
     const response = await fetch(url);
     const data = await response.json();
 
-    // 🔥 SAB TAG REMOVE
+    // 🔥 REMOVE EXTRA TAGS
     if (data?.tag) delete data.tag;
     if (data?.buy_api) delete data.buy_api;
     if (data?.support) delete data.support;
     if (data?._powered_by) delete data._powered_by;
 
-    // agar nested me ho
+    // Nested remove
     if (data?.data?.tag) delete data.data.tag;
+    if (data?.data?.buy_api) delete data.data.buy_api;
+    if (data?.data?.support) delete data.data.support;
+    if (data?.data?._powered_by) delete data.data._powered_by;
 
     return res.status(200).json(data);
 
